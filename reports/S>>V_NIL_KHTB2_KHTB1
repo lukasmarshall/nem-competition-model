@@ -1,0 +1,12 @@
+S>>V_NIL_KHTB2_KHTB1
+Out= Nil, avoid O/L Tailem Bend - Keith #1 132kV on trip of Tailem Bend - Keith #2 132kV line, Feedback
+
+Limit:		Thermal
+Impact:		SA Generation + Interconnectors
+Reason:		Trip of Tailem Bend - Keith #2 132kV line
+Effective Date:	31/05/2016
+Equality:	<
+Constraint Sets:
+S-NIL_1
+
+LHS Equation:	-0.9115 * LKBONNY2 - 0.9115 * LKBONNY3 - 1 * LADBROK1 - 1 * LADBROK2 - 0.9114 * SNUG1 - 0.5208 * V-SA

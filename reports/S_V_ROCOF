@@ -1,0 +1,24 @@
+S_V_ROCOF
+Out = South Australia at credible risk of separation from NEM, limit SA to VIC Heywood interconnection flow to prevent Rate of Change of Frequency exceeding 1 Hz/sec in SA immediately following separation. 
+
+Limit:		ROC Frequency
+Impact:		Vic - SA (Heywood) Interconnector
+Reason:		Limit interconnection flow to minimise risk of cascading tripping of generation in SA post separation due to high RoCoF. Limit calculated based on online inertia in SA.
+Effective Date:	12/10/2016
+Equality:	<
+Constraint Sets:
+V-HYMO
+V-HY_500BUS
+V-MLMO
+V-MLTR
+I-HYSE_N-2
+V-HYTX
+V-MLSY_P
+V-MLSY_R
+V-X_ML_BUSTIE_500
+V-X_HYTX_TWO
+V-HYTR
+I-HYSE
+V-HYCB_210_213
+
+LHS Equation:	-1 * V-SA

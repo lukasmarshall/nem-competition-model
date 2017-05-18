@@ -1,0 +1,12 @@
+N^^N_NIL_1
+Out= Nil, northerly flow on line 01,2,3 and 07 cut-set voltage stability limit, Feedback
+
+Limit:		Voltage Stability
+Impact:		Vic - NSW Interconnector + Generators
+Reason:		Trip of Lower Tumut to Canberra (07) line
+Effective Date:	20/02/2015
+Equality:	<
+Constraint Sets:
+N-NIL
+
+LHS Equation:	0.5169 * BLOWERNG + 0.9071 * HUMENSW - 0.9902 * SNOWYP + 0.9902 * TUMUT3 + 0.8401 * URANQ11 + 0.8401 * URANQ12 + 0.8401 * URANQ13 + 0.8401 * URANQ14 + 1 * UPPTUMUT + 0.1859 * GUNNING1 + 0.9531 * VIC1-NSW1

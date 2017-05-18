@@ -1,0 +1,11 @@
+Q>>BRTR_MRTX5_MRTX4
+Out= 8814 or 8815 R2 Braemar to H18 Tarong 275kV line, avoid O/L on Middle Ridge 330/275 kV Tx #4, on trip of Middle Ridge 330/275 kV Tx #5 (or 9907), DS RHS is swamped when Middle Ridge bus splitting scheme is triggered, Feedback
+
+Limit:		Thermal
+Impact:		Qld Generation + Interconnectors
+Reason:		Trip of Middle Ridge 330/275 kV Tx #5 (or 9907 Millmerran to Middle Ridge 330kV line)
+Effective Date:	21/08/2013
+Equality:	<
+Constraint Sets:
+
+LHS Equation:	1 * MPP_1 + 1 * MPP_2 + 0.7265 * BRAEMAR1 + 0.7265 * BRAEMAR2 + 0.7265 * BRAEMAR3 + 0.7265 * KPP_1 + 0.7265 * BRAEMAR5 + 0.7265 * BRAEMAR6 + 0.7265 * BRAEMAR7 + 0.7265 * DDPS1 + 0.08258 * CPSA - 0.2085 * OAKEY1 - 0.2085 * OAKEY2 + 0.08258 * ROMA_7 + 0.08258 * ROMA_8 + 0.08258 * TNPS1 + 0.08258 * TARONG#1 + 0.08258 * TARONG#2 + 0.08258 * TARONG#3 + 0.08258 * TARONG#4 + 0.923 * NSW1-QLD1

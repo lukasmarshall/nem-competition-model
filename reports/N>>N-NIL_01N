@@ -1,0 +1,12 @@
+N>>N-NIL_01N
+Out= Nil, avoid O/L Canberra to Yass (9) on trip of Kangaroo Valley to Dapto (18) line, Feedback
+
+Limit:		Thermal
+Impact:		NSW Generation + Interconnectors
+Reason:		Trip of Kangaroo Valley to Dapto (18) line
+Effective Date:	15/11/2016
+Equality:	<
+Constraint Sets:
+N-NIL
+
+LHS Equation:	0.511 * BROKENH1 + 0.28 * BLOWERNG + 1 * BOCORWF1 + 1 * WOODLWN1 + 1 * GUTHEGA + 0.5007 * HUMENSW - 0.5421 * SNOWYP + 0.5421 * TUMUT3 + 1 * SHGEN - 1 * SHPUMP + 0.4509 * URANQ11 + 0.4509 * URANQ12 + 0.4509 * URANQ13 + 0.4509 * URANQ14 + 0.555 * UPPTUMUT + 0.1052 * GUNNING1 + 0.5263 * VIC1-NSW1

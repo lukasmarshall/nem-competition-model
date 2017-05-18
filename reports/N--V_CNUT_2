@@ -1,0 +1,12 @@
+N::V_CNUT_2
+Out = Upper Tumut -Canberra(01), stability limit (Snowy-NSW) for fault of various location between Yass-South Morang area
+
+Limit:		Transient Stability
+Impact:		Vic - NSW Interconnector + Generators
+Reason:		Fault of various location between Yass-South Morang area
+Effective Date:	19/02/2016
+Equality:	<
+Constraint Sets:
+N-CNUT_01
+
+LHS Equation:	0.9914 * BROKENH1 + 0.966 * BLOWERNG + 1 * BOCORWF1 + 1 * GUTHEGA + 0.9902 * HUMENSW - 0.9955 * SNOWYP + 0.9955 * TUMUT3 + 0.9861 * URANQ11 + 0.9861 * URANQ12 + 0.9861 * URANQ13 + 0.9861 * URANQ14 + 0.9956 * UPPTUMUT + 0.9455 * GUNNING1 + 0.9929 * VIC1-NSW1

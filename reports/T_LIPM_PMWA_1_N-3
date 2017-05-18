@@ -1,0 +1,12 @@
+T_LIPM_PMWA_1_N-3
+Out=Nil, loss of both Liapootah to Waddamana (tee) to Palmerston 220 kV lines and Palmerston to Waddamana 110 kV line classified credible, limit southern generators to <= southern load + 15 MW
+
+Limit:		Other
+Impact:		Tasmanian Generation
+Reason:		Loss of TAS Nth <-> Sth lines declared credible
+Effective Date:	16/06/2016
+Equality:	<
+Constraint Sets:
+T-LIPM_PMWA_N-3
+
+LHS Equation:	1 * GORDON + 1 * LK_ECHO + 1 * LI_WY_CA + 1 * MEADOWBK + 1 * TARRALEA + 1 * TUNGATIN

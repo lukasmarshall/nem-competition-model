@@ -1,0 +1,12 @@
+T>>T_GTSH_EXP_3A
+Out = Sheffield to Georgetown 220 kV line, avoid O/L Palmerston to Hadspen 220 kV line (flow North) for trip of other Palmerston to Hadspen 220 kV line considering NCSPS action, ensure Basslink can compensate NCSPS action to remove overload.
+
+Limit:		Thermal
+Impact:		Tasmanian Generation + Interconnectors
+Reason:		Avoid overloading Palmerston to Hadspen 220 kV line for trip of other Palmerston to Hadspen 220 kV line
+Effective Date:	25/09/2013
+Equality:	<
+Constraint Sets:
+T-GTSH
+
+LHS Equation:	0.4402 * CETHANA + 0.1273 * MUSSELR1 + 0.4402 * DEVILS_G + 0.4402 * BASTYAN + 0.4402 * FISHER + 0.9371 * GORDON + 0.4402 * JBUTTERS + 0.8052 * LK_ECHO + 0.9632 * LI_WY_CA + 0.4402 * MACKNTSH + 0.8742 * MEADOWBK + 1 * POAT220 + 0.5445 * POAT110 + 0.4402 * REECE1 + 0.4402 * REECE2 + 0.4402 * LEM_WIL + 0.8282 * TARRALEA + 0.4402 * TRIBUTE + 0.1273 * TREVALLN + 0.8282 * TUNGATIN - 0.9371 * T-V-MNSP1

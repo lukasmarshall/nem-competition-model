@@ -1,0 +1,12 @@
+N>>N-NIL__B_15M
+Out= Nil, avoid O/L Upper Tumut to Canberra (01) using 15 mins rating on trip of Lower Tumut to Canberra (07) line, Feedback
+
+Limit:		Thermal
+Impact:		Vic - NSW Interconnector + Generators
+Reason:		Trip of Lower Tumut to Canberra (07) line
+Effective Date:	1/07/2016
+Equality:	<
+Constraint Sets:
+N-NIL
+
+LHS Equation:	0.8184 * BROKENH1 + 0.4705 * BLOWERNG - 0.403 * BOCORWF1 - 0.3052 * WOODLWN1 - 0.403 * GUTHEGA + 0.7911 * HUMENSW - 0.7959 * SNOWYP + 0.7959 * TUMUT3 - 0.09348 * SHGEN + 0.09348 * SHPUMP + 0.7185 * URANQ11 + 0.7185 * URANQ12 + 0.7185 * URANQ13 + 0.7185 * URANQ14 + 1 * UPPTUMUT + 0.2172 * GUNNING1 + 0.8552 * VIC1-NSW1

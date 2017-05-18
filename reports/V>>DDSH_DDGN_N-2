@@ -1,0 +1,12 @@
+V>>DDSH_DDGN_N-2
+Out= Nil, avoid O/L Dederang to Shepparton 220kV line on trip of both Dederang to Glenrowan No.1 and No.3 220kV lines, Feedback
+
+Limit:		Thermal
+Impact:		Victorian Generation + Interconnectors
+Reason:		Trip of both Dederang to Glenrowan No.1 and No.3 220kV lines
+Effective Date:	10/04/2017
+Equality:	<
+Constraint Sets:
+V-DDGN_N-2
+
+LHS Equation:	-1 * BROKENH1 + 0.2441 * MURRAY - 0.568 * ARWF1 - 0.08181 * LNGS1 - 0.08181 * LNGS2 + 0.3435 * DARTM1 - 0.4145 * MERCER01 + 0.1427 * EILDON1 + 0.1427 * EILDON2 + 0.2495 * HUMEV - 0.09736 * MORTLK11 - 0.09736 * MORTLK12 + 0.3435 * MCKAY1 - 0.3935 * OAKLAND1 - 0.09736 * MACARTH1 + 0.3435 * WKIEWA1 + 0.3435 * WKIEWA2 + 0.8188 * V-S-MNSP1 + 0.09736 * V-SA - 0.2279 * VIC1-NSW1

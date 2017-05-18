@@ -1,0 +1,12 @@
+S:V_500_HY_TEST
+SA to VIC on Heywood upper transfer limit of 500 MW, limit for testing of Heywood interconnection upgrade.
+
+Limit:		Oscillatory Stability
+Impact:		Vic - SA (Heywood) Interconnector
+Reason:		500 MW limit on SA to VIC transfer on Heywood.
+Effective Date:	25/11/2015
+Equality:	<
+Constraint Sets:
+I-SV_500_TEST
+
+LHS Equation:	-1 * V-SA

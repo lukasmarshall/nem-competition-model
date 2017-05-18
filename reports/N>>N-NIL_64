@@ -1,0 +1,12 @@
+N>>N-NIL_64
+Out= Nil, avoid O/L Bannaby to Sydney West (39) on trip of Dapto to Sydney South (11) line, Feedback
+
+Limit:		Thermal
+Impact:		NSW Generation + Interconnectors
+Reason:		Trip of Dapto to Sydney South (11) line
+Effective Date:	12/01/2016
+Equality:	<
+Constraint Sets:
+N-NIL
+
+LHS Equation:	0.2982 * BW01 + 0.2982 * BW02 + 0.4013 * BW03 + 0.4013 * BW04 + 0.9441 * BROKENH1 + 0.9381 * BLOWERNG + 0.1335 * CG1 + 0.1335 * CG2 + 0.1335 * CG3 + 0.1335 * CG4 + 0.9354 * BOCORWF1 + 0.8893 * WOODLWN1 + 0.7568 * TALWA1 + 0.1658 * ER01 + 0.1658 * ER02 + 0.2048 * ER03 + 0.2048 * ER04 + 1 * GULLRWF1 + 0.9354 * GUTHEGA + 0.9438 * HUMENSW + 0.2922 * HVGTS + 0.2922 * LD01 + 0.2922 * LD02 + 0.2922 * LD03 + 0.2922 * LD04 - 0.9451 * SNOWYP + 0.9451 * TUMUT3 + 0.981 * TARALGA1 + 0.2854 * MOREESF1 + 0.5199 * MP1 + 0.5199 * MP2 + 0.7894 * SHGEN - 0.7894 * SHPUMP + 0.9429 * URANQ11 + 0.9429 * URANQ12 + 0.9429 * URANQ13 + 0.9429 * URANQ14 + 0.9451 * UPPTUMUT + 0.1433 * VP5 + 0.1433 * VP6 + 0.5334 * NYNGAN1 + 0.9331 * GUNNING1 - 0.2797 * N-Q-MNSP1 - 0.2847 * NSW1-QLD1 + 0.9444 * VIC1-NSW1

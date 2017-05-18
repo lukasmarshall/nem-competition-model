@@ -1,0 +1,12 @@
+V>>BABE_DDGN_N-2
+Out= Nil, avoid O/L Ballarat to Bendigo 220kV line on trip of both Dederang to Glenrowan 220kV No.1 and No.3 lines, Feedback
+
+Limit:		Thermal
+Impact:		Victorian Generation + Interconnectors
+Reason:		Trip of both Dederang to Glenrowan No.1 and No.3 220kV lines
+Effective Date:	10/04/2017
+Equality:	<
+Constraint Sets:
+V-DDGN_N-2
+
+LHS Equation:	-0.7201 * BROKENH1 - 0.2333 * MURRAY + 0.1893 * ARWF1 - 0.2753 * DARTM1 + 0.3326 * MERCER01 - 0.1142 * EILDON1 - 0.1142 * EILDON2 - 0.2276 * HUMEV + 0.07852 * MORTLK11 + 0.07852 * MORTLK12 - 0.2753 * MCKAY1 + 0.3154 * OAKLAND1 + 0.07852 * MACARTH1 - 0.2753 * WKIEWA1 - 0.2753 * WKIEWA2 + 1 * V-S-MNSP1 - 0.07852 * V-SA + 0.2461 * VIC1-NSW1

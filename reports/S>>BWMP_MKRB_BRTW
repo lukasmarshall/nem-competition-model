@@ -1,0 +1,19 @@
+S>>BWMP_MKRB_BRTW
+Out= Blyth West- Munno Para 275kV line with Blyth West CB8002 OPEN, avoid O/L Brinkworth - Templers West 275kV on trip of Mokota - Robertstown 275kV line(this offloads Davenport-Mokota 275kV line and trips Hallet 2 windfarm), Feedback
+
+Limit:		Thermal
+Impact:		SA Generation + Interconnectors
+Reason:		Trip of  Mokota - Robertstown 275kV line(this offloads Davenport-Mokota 275kV line and trips Hallet 2 windfarm)
+Effective Date:	21/11/2016
+Equality:	<
+Constraint Sets:
+S-X_BWMP+MPPA
+S-BWMP
+S-BWMP_OFF
+S-X_PA_W_BUS_R+BWPA
+S-X_PA6510+BWPA
+S-PA_W_BUS_R_BC-2CP
+S-X_BWMP+MPPA_OFF
+S-PA_W_BUS_R
+
+LHS Equation:	0.9264 * NBHWF1 + 0.9264 * BLUFF1 + 0.9241 * SNOWNTH1 + 0.9241 * SNOWSTH1 + 1 * CLEMGPWF + 0.6252 * HDWF1 + 0.6252 * HDWF2 + 0.5129 * AGLHAL + 0.5129 * HALLWF1 + 0.6337 * MINTARO + 0.7841 * SNOWTWN1 + 0.9264 * POR03 + 0.9264 * POR01 + 0.4674 * WATERLWF + 0.355 * V-S-MNSP1

@@ -1,0 +1,12 @@
+T>T_PMHA_SHGT_N-2
+Out= NIL, Loss of both Sheffield to Georgetown 220kV lines declared credible, avoid O/L the Palmerston to Hadspen 220 kV line for loss of both Sheffield to Georgetown 220 kV lines, Feedback
+
+Limit:		Thermal
+Impact:		Tasmanian Generation
+Reason:		Avoid O/L the Palmerston to Hadspen 220 kV line for loss of both Sheffield to Georgetown 220 kV lines
+Effective Date:	16/06/2016
+Equality:	<
+Constraint Sets:
+T-GTSH_N-2
+
+LHS Equation:	1 * CETHANA + 0.2523 * MUSSELR1 + 1 * DEVILS_G + 1 * BASTYAN + 1 * FISHER + 0.9418 * GORDON + 1 * JBUTTERS + 0.8236 * LK_ECHO + 0.9665 * LI_WY_CA + 1 * MACKNTSH + 0.8877 * MEADOWBK + 1 * POAT220 + 0.6122 * POAT110 + 1 * REECE1 + 1 * REECE2 + 1 * LEM_WIL + 0.8427 * TARRALEA + 1 * TRIBUTE + 0.2523 * TREVALLN + 0.8427 * TUNGATIN
