@@ -6,6 +6,7 @@ from mpl_toolkits.basemap import Basemap
 import numpy as np
 import os
 import re
+import astar
 
 
 
@@ -48,14 +49,91 @@ def isNameInLine(name, line):
 	
 
 
+def getNodeNames(features):
+	nodeNames = []
+	for feature in features:
+		name = feature['properties']['NAME']
+		# print name
+		nodes = name.split(' to ')
+		for node in nodes:
+			# print node
+			node = node.strip()
+			if node not in nodeNames and not node.isspace() and not node == "":
+				nodeNames.append(node)
+	return nodeNames
+
+# Checks if an origin and destiantion are mentioned close to each other in the line. 
+def checkPotentialPath(node1, node2, line):
+	m = re.search(node1+'.{0,8}'+node2, line)
+	ms = re.search(node2+'.{0,8}'+node1, line)
+	if m or ms:
+		return True
+	else:
+		return False
+
  
 json_file =  open("networkMap/features.geojson")
 json_data = geojson.load(json_file)
 
-# plt.clf()
+# Get a list of all the node names
+nodeNames = getNodeNames(json_data.features)
+# print nodeNames
+# List of path names for highlighting. 
+toHighlight = []
+
+graph = astar.constructGraph(json_data.features)
+# Iterate through report, look for occurrences of network feature names, add to list for later highlighting. 
+for filename in os.listdir('reports'):
+	report = open('reports/'+filename)
+	print filename
+	lines = []
+	foundInThisReport = []
+	for line in report:
+		lines.append(line)
+	
+	# for feature in json_data.features:
+	# 	for line in lines:
+	# 		# # Simple, old version without a-star.
+	# 		# name = feature['properties']['NAME']
+	# 		# swappedName = swapEndpoints(name) #need to swap because often names are 'x to y' and then written as 'y to x'
+	# 		# if isNameInLine(name, line):
+	# 		# 	if name not in toHighlight and not name.isspace():
+	# 		# 		toHighlight.append(name)
+	# 		# 		foundInThisReport.append(name)
+			
+
+	for line in lines:
+		# New complex version with a-star. 
+
+		nodeShortList = []
+		for node in nodeNames:
+			if node in line and not node in nodeShortList:
+				nodeShortList.append(node)
+		
+		for node1 in nodeShortList:
+			for node2 in nodeShortList:
+				if checkPotentialPath(node1, node2, line):
+					print "Running Astar on "+node1 + " <> "+ node2
+					path = astar.run(graph, node1, node2)
+					if path:
+						for pathName in path:
+							if pathName not in toHighlight:
+								toHighlight.append(pathName)
+								foundInThisReport.append(pathName)
+
+	print foundInThisReport
+
+print "Total Paths to Highlight: "
+print toHighlight
+
+# ==========================================
+# ==========================================
+# Charting / Graphing
+# ==========================================
+# ==========================================
 ax = plt.figure(figsize=(10, 10)).add_subplot(111)#fig.gca()
 
-
+# Base Plotting Setup. 
 m = Basemap(projection='cea',llcrnrlat=-44,urcrnrlat=-16,
 		llcrnrlon=135,urcrnrlon=154,resolution='c')
 m.drawmapboundary(fill_color='white', zorder=-1)
@@ -64,31 +142,7 @@ m.drawmeridians(np.arange(0., 360., 60.), labels=[1,0,0,1], dashes=[1, 1], linew
 m.drawcoastlines(color='0.6', linewidth=1)
 
 
-toHighlight = []
-# Iterate through report, look for occurrences of network feature names, add to list for later highlighting. 
-for filename in os.listdir('reports'):
-	report = open('reports/'+filename)
-	# report = open('sample_report.txt')
-	print filename
-	lines = []
-	foundInThisReport = []
-	for line in report:
-		lines.append(line)
 
-	
-	for feature in json_data.features:
-		# print feature['properties']['NAME']
-		for line in lines:
-			name = feature['properties']['NAME']
-			swappedName = swapEndpoints(name) #need to swap because often names are 'x to y' and then written as 'y to x'
-			if isNameInLine(name, line):
-				if name not in toHighlight and not name.isspace():
-					toHighlight.append(name)
-					foundInThisReport.append(name)
-	print foundInThisReport
-
-
-print toHighlight
 # Loop through the features and draw them on the map 
 i = 0
 toLabel = list(toHighlight)
