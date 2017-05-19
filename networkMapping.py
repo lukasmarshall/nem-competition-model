@@ -119,7 +119,7 @@ for filename in os.listdir('reports'):
 						for pathName in path:
 							if pathName not in toHighlight:
 								toHighlight.append(pathName)
-								foundInThisReport.append(pathName)
+							foundInThisReport.append(pathName)
 
 	print foundInThisReport
 

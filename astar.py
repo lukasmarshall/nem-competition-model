@@ -80,28 +80,13 @@ def addToGraph(graph, origin, destination, length, object_id, origin_lat, origin
 	
 
 def reconstruct_path(cameFrom, current, graph):
-	# print "Path found!! Reconstructing from current: "+current
-	# print "with camefrom: "
-	# print cameFrom
 	total_path = []
 	while current in list(cameFrom):
 		total_path.append(graph[current]['neighbours'][cameFrom[current]]['path_name'])
 		current = cameFrom[current]
 
-	print total_path
-
+	# print total_path
 	return total_path
-
-
-	# print "reconstructing path to "+current
-	# print cameFrom
-	# path = []
-	# path.append(graph[current]['path_name'])
-	# for node in cameFrom:
-	# 	if graph[node]['path_name'] not in path:
-	# 		path.append(graph[node]['path_name'])
-	# return path
-	
 
 
 def run(graph, start, goal):
