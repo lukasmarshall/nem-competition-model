@@ -7,91 +7,14 @@ import bokeh
 import matplotlib.pyplot as plt
 import pandas as pd
 
-from matplotlib import colors as mcolors
 
 
-# from bokeh.charts import Scatter, output_file, show
-from bokeh.plotting import figure, output_file, show
-from bokeh.sampledata.autompg import autompg as df
+import marketUtils
 
 
 
 
-
-
-def saveToPickle(my_object, fileName):
-    print("Pickling my_object to file: "+str(fileName)+"...")
-    pickle.dump(my_object, open(fileName, "wb"))
-    print ("Saved.")
-
-def getFromPickle(fileName):
-    if os.path.isfile(fileName):
-        my_object = pickle.load(open(fileName, "rb"))
-        return my_object
-    else:
-        return None
-
-def getNem():
-    myFile = open('nem_allstates.csv')
-    nemData = csv.DictReader(myFile)
-    nem = {}
-
-    for timePeriod in nemData:
-        timeString = timePeriod['Time-ending']
-		
-        nem[timeString] = {
-			 'nsw': {
-				'price': timePeriod['NSW1 Price'],
-				'demand':float(timePeriod['NSW1 Scheduled Demand']),
-				'nonScheduled':float(timePeriod['NSW1 Non-scheduled']),
-				'generation': float(timePeriod['NSW1 Generation']),
-				'availability':float(timePeriod['NSW1 Availability']),
-				},
-			'vic': {
-				'price': timePeriod['VIC1 Price'],
-				'demand':float(timePeriod['VIC1 Scheduled Demand']),
-				'nonScheduled':float(timePeriod['VIC1 Non-scheduled']),
-				'generation': float(timePeriod['VIC1 Generation']),
-				'availability':float(timePeriod['VIC1 Availability']),
-				},
-			'qld': {
-				'price': timePeriod['QLD1 Price'],
-				'demand':float(timePeriod['QLD1 Scheduled Demand']),
-				'nonScheduled':float(timePeriod['QLD1 Non-scheduled']),
-				'generation': float(timePeriod['QLD1 Generation']),
-				'availability':float(timePeriod['QLD1 Availability']),
-				},
-			'sa': {
-				'price': timePeriod['SA1 Price'],
-				'demand':float(timePeriod['SA1 Scheduled Demand']),
-				'nonScheduled':float(timePeriod['SA1 Non-scheduled']),
-				'generation': float(timePeriod['SA1 Generation']),
-				'availability':float(timePeriod['SA1 Availability']),
-				},
-			'tas': {
-				'price': timePeriod['TAS1 Price'],
-				'demand':float(timePeriod['TAS1 Scheduled Demand']),
-				'nonScheduled':float(timePeriod['TAS1 Non-scheduled']),
-				'generation': float(timePeriod['TAS1 Generation']),
-				'availability':float(timePeriod['TAS1 Availability']),
-				},
-		}
-    return nem
-
-def getInterconnectorFlows():
-	filename = 'interconnectorflows.csv'
-	# Reading the file
-	df = pd.read_csv(filename, index_col=0)
-	# Creating the dict
-	flows = df.transpose().to_dict()
-	return flows
-
-
-
-
-
-
-
+# Generates data for plotting, returns as dict, is then plotted when key_event function is called. 
 
 def chartFlowVsPrice(nem, flows):
 	plots = []
@@ -153,10 +76,12 @@ def key_event(e):
 	plt.title(plots[curr_plt_index]['title'])
 	fig.canvas.draw()
 
-nem = getNem()
-flows = getInterconnectorFlows()
-plots = chartFlowVsPrice(nem, flows)
 
+
+
+nem = marketUtils.getNem()
+flows = marketUtils.getInterconnectorFlows()
+plots = chartFlowVsPrice(nem, flows)
 
 fig = plt.figure()
 fig.canvas.mpl_connect('key_press_event', key_event)
