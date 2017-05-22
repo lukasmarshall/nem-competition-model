@@ -72,7 +72,7 @@ def chartHHI(nem):
             price.append(nem[timeString]['price'])
 
         plt.figure()
-        plt.plot(hhi, price, 'o', col)
+        plt.plot(hhi, price, 'o')
         
         plt.ylabel('price')
         plt.xlabel('hhi')

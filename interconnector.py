@@ -16,8 +16,20 @@ from bokeh.sampledata.autompg import autompg as df
 
 
 
-def getNem():
 
+def saveToPickle(my_object, fileName):
+    print("Pickling my_object to file: "+str(fileName)+"...")
+    pickle.dump(my_object, open(fileName, "wb"))
+    print ("Saved.")
+
+def getFromPickle(fileName):
+    if os.path.isfile(fileName):
+        my_object = pickle.load(open(fileName, "rb"))
+        return my_object
+    else:
+        return None
+
+def getNem():
     myFile = open('nem_allstates.csv')
     nemData = csv.DictReader(myFile)
     nem = {}
@@ -25,7 +37,7 @@ def getNem():
     for timePeriod in nemData:
         timeString = timePeriod['Time-ending']
 		
-        nem[timeString]['nem'] = {
+        nem[timeString] = {
 			 'nsw': {
 				'price': timePeriod['NSW1 Price'],
 				'demand':float(timePeriod['NSW1 Scheduled Demand']),
@@ -64,50 +76,12 @@ def getNem():
 		}
     return nem
 
-def saveToPickle(my_object, fileName):
-    print("Pickling my_object to file: "+str(fileName)+"...")
-    pickle.dump(my_object, open(fileName, "wb"))
-    print ("Saved.")
-
-def getFromPickle(fileName):
-    if os.path.isfile(fileName):
-        my_object = pickle.load(open(fileName, "rb"))
-        return my_object
-    else:
-        return None
-
-
-def chartHHI(nem):
-    charts = []
-    hhi = []
-    price = []
-    for category in categories:
-        print category
-        for timeString in list(nem):
-            hhi.append(nem[timeString][category+'_HHI'])
-            price.append(nem[timeString]['price'])
-
-        plt.figure()
-        plt.plot(hhi, price, 'o', col)
-        
-        plt.ylabel('price')
-        plt.xlabel('hhi')
-        plt.title("<="+category+" Band HHI vs Price")
-        # plt.draw()
-        plt.show()
-        # p = figure(plot_width=800, plot_height=400, title="<="+category+" Band HHI vs Price")
-
-        # # add a circle renderer with a size, color, and alpha
-        # p.circle(hhi, price, size=2, color="navy", alpha=0.5)
-        # output_file(category+"_hhi_scatter.html")
-        # show(p)
-
-
-def getInterconnectorFlows(filename, bidStacks):
+def getInterconnectorFlows():
+	filename = 'interconnectorflows.csv'
 	# Reading the file
 	df = pd.read_csv(filename, index_col=0)
 	# Creating the dict
-	flows = df.transpose().to_dict(orient='series')
+	flows = df.transpose().to_dict()
 	return flows
 
 
@@ -117,40 +91,68 @@ def getInterconnectorFlows(filename, bidStacks):
 
 
 
-
-bidStacks = {}
-directory = 'interconnectorflows.csv'
-
-
-
-
-
-# nem = getFromPickle('nem.pkl')
-# if not nem:
-#     nem = getNem()
-#     # Calculate HHI for each category
-#     i = 0
-#     for timeString in list(nem):
-#         print str(i)+' of '+str(len(list(nem)))
-#         i += 1
-#         for category in categories:
-#             values = []
-#             for retailer in list(bidStacks):
-#                 # print retailer
-#                 # print bidStacks[retailer][timeString]
-#                 # print category +"  "+ str(bidStacks[retailer][timeString][category])
-#                 values.append(float(bidStacks[retailer][timeString][category]))
-                
-#             hhi = calculateHHI(values)    
-#             nem[timeString][category+"_HHI"] = hhi
-#             if category == 'Cumulative':
-#                 nem[timeString]['maxShareRetailer'] = getMaxShareRetailer(values, list(bidStacks))
-#     saveToPickle(nem, 'nem.pkl')
+def chartFlowVsPrice(nem, flows):
+	plots = []
+	states = ['nsw']
+	for state in states:
+		for interconnectorAttribute in list(flows[list(flows)[0]]):
+			print "charting "+ interconnectorAttribute
+			flow = []
+			price = []
+			for time in list(nem):
+				price.append(nem[time]['nsw']['price'])
+				flow.append(flows[time][interconnectorAttribute])
+			# plt.figure()
 
 
-# chartHHI(nem)
+			plots.append({
+				'x': flow,
+				'y': price,
+				'xlabel': interconnectorAttribute,
+				'ylabel': state+' price',
+				'title': interconnectorAttribute +' VS '+state+'spot price',
+			})
+			# plt.plot(flow, price, 'o')
+			
+			# plt.savefig('charts/interconnectorflows/'+interconnectorAttribute)
+			print "showing plot"
+			# plt.show()
+			print "plot closed"
+	return plots
+	
 
 
-        
+# now the real code :) 
+curr_plt_index = 0
+plots = []
+def key_event(e):
+	global curr_plt_index
+
+	if e.key == "right":
+		curr_plt_index = curr_plt_index + 1
+	elif e.key == "left":
+		curr_plt_index = curr_plt_index - 1
+	else:
+		return
+	curr_plt_index = curr_plt_index % len(plots)
+
+	ax.cla()
+	ax.plot(plots[curr_plt_index]['x'], plots[curr_plt_index]['y'], 'o')
+	plt.ylabel(plots[curr_plt_index]['ylabel'])
+	plt.xlabel(plots[curr_plt_index]['xlabel'])
+	plt.title(plots[curr_plt_index]['title'])
+	fig.canvas.draw()
+
+nem = getNem()
+flows = getInterconnectorFlows()
+plots = chartFlowVsPrice(nem, flows)
+
+
+fig = plt.figure()
+fig.canvas.mpl_connect('key_press_event', key_event)
+ax = fig.add_subplot(111)
+
+plt.show()
+
 
 
