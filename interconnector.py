@@ -26,7 +26,9 @@ def chartFlowVsPrice(nem, flows):
 		'tas': {'color': '#2F394D',}
 		}
 	
-	for interconnectorAttribute in list(flows[list(flows)[0]]):
+	attributes = list(flows[list(flows)[0]])
+	attributes.sort()
+	for interconnectorAttribute in attributes:
 		for state in list(states):
 			print "charting "+state+" "+ interconnectorAttribute
 			flow = []
@@ -46,7 +48,7 @@ def chartFlowVsPrice(nem, flows):
 				'y': price,
 				'xlabel': interconnectorAttribute,
 				'ylabel': state+' price',
-				'title': interconnectorAttribute +' VS '+state+' Spot Price',
+				'title': interconnectorAttribute +' vs '+state.upper()+' Spot Price',
 				'symbol': symbol,
 				'color':states[state]['color']
 			})
