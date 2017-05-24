@@ -2,6 +2,7 @@ import os
 import csv
 import numpy as np
 import pickle
+import marketUtils
 
 import bokeh
 import matplotlib.pyplot as plt
@@ -32,21 +33,6 @@ def addBidStack(directory, filename, bidStacks):
     bidStacks[retailer] = stack
     return bidStacks
 
-
-def getNem():
-    myFile = open('nem.csv')
-    nemData = csv.DictReader(myFile)
-    nem = {}
-    for timePeriod in nemData:
-        timeString = timePeriod['Time-ending']
-        nem[timeString] = {
-            'price': timePeriod['NSW1 Price'],
-            'demand':float(timePeriod['NSW1 Scheduled Demand']),
-            'nonScheduled':float(timePeriod['NSW1 Non-scheduled']),
-            'generation': float(timePeriod['NSW1 Generation']),
-            'availability':float(timePeriod['NSW1 Availability']),
-        }
-    return nem
 
 def saveToPickle(my_object, fileName):
     print("Pickling my_object to file: "+str(fileName)+"...")
@@ -148,7 +134,7 @@ for filename in os.listdir(directory):
 
 nem = getFromPickle('nem.pkl')
 if not nem:
-    nem = getNem()
+    nem = marketUtils.getNem()
     # Calculate HHI for each category
     i = 0
     for timeString in list(nem):
