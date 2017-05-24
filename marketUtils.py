@@ -64,7 +64,7 @@ def getInterconnectorFlows():
 
 
 
-def getBidStack(directory, filename, bidStacks):
+def getBidStackFromFile(directory, filename, bidStacks):
     path = os.path.join(directory, filename)
     myFile = open(path)
     retailer = filename.split('.')[0]
@@ -78,3 +78,16 @@ def getBidStack(directory, filename, bidStacks):
 
     bidStacks[retailer] = stack
     return bidStacks
+
+
+def getBidStacks():
+	bidStacks = {}
+	directory = 'bidstacks'
+	for filename in os.listdir(directory):
+		if filename.endswith(".csv") or filename.endswith(".py"): 
+			bidStacks = getBidStackFromFile(directory, filename, bidStacks)
+			continue
+		else:
+			continue
+	return bidStacks
+

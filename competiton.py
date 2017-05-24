@@ -96,26 +96,7 @@ def getMaxShareRetailer(values, retailers):
         return None
 
 
-
-
-
-
-
-
-
-
-
-bidStacks = {}
-directory = 'bidstacks'
-for filename in os.listdir(directory):
-    if filename.endswith(".csv") or filename.endswith(".py"): 
-        bidStacks = marketUtils.getBidStack(directory, filename, bidStacks)
-        continue
-    else:
-        continue
-
-
-
+bidStacks = marketUtils.getBidStacks()
 
 nem = getFromPickle('nem.pkl')
 if not nem:
