@@ -18,21 +18,6 @@ categories = ['Cumulative', '-$500', '$0','$15', '$25', '$35', '$50','$100', '$3
 
 
 
-def addBidStack(directory, filename, bidStacks):
-    path = os.path.join(directory, filename)
-    myFile = open(path)
-    retailer = filename.split('.')[0]
-    print retailer
-
-    # Input data is normalised to kWh/kWp or MWh / MWp (equivalent)
-    lines = csv.DictReader(myFile)
-    stack = {}
-    for line in lines:
-        stack[line['Time-ending']] = line
-
-    bidStacks[retailer] = stack
-    return bidStacks
-
 
 def saveToPickle(my_object, fileName):
     print("Pickling my_object to file: "+str(fileName)+"...")
@@ -124,7 +109,7 @@ bidStacks = {}
 directory = 'bidstacks'
 for filename in os.listdir(directory):
     if filename.endswith(".csv") or filename.endswith(".py"): 
-        bidStacks = addBidStack(directory, filename, bidStacks)
+        bidStacks = marketUtils.getBidStack(directory, filename, bidStacks)
         continue
     else:
         continue

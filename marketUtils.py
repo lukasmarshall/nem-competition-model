@@ -64,3 +64,17 @@ def getInterconnectorFlows():
 
 
 
+def getBidStack(directory, filename, bidStacks):
+    path = os.path.join(directory, filename)
+    myFile = open(path)
+    retailer = filename.split('.')[0]
+    print retailer
+
+    # Input data is normalised to kWh/kWp or MWh / MWp (equivalent)
+    lines = csv.DictReader(myFile)
+    stack = {}
+    for line in lines:
+        stack[line['Time-ending']] = line
+
+    bidStacks[retailer] = stack
+    return bidStacks
