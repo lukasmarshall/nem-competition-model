@@ -40,12 +40,12 @@ def chartHHI(nem):
         print category
         for timeString in list(nem):
             hhi.append(nem[timeString][category+'_HHI'])
-            price.append(nem[timeString]['price'])
+            price.append(nem[timeString]['demand'])
 
         plt.figure()
         plt.plot(hhi, price, 'o')
         
-        plt.ylabel('price')
+        plt.ylabel('demand')
         plt.xlabel('hhi')
         plt.title("<="+category+" Band HHI vs Price")
         # plt.draw()

@@ -33,7 +33,7 @@ xLabels.sort()
 
 for time in times:
 	# Add the classifications:
-	if float(nem[time]['nsw']['price']) >= 300:
+	if float(nem[time]['sa']['price']) >= 300:
 		classification = 1
 	else: 
 		classification = 0
