@@ -62,16 +62,13 @@ def constructGraph(features):
 
 		if not origin.isspace() and not origin == "" and not destination.isspace() and not destination == "":
 			print name
-			path = feature['geometry']['coordinates'][0]
-			length = float(feature['properties']['SHAPE_Length'])
-			# Need to figure out a way to change origin coords or check them because they vary slightly and infer different nodes.
-			# Node attributes must be hashable.Maybe a separate lookup table? Just gonna keep em here for now. 
-			# origin_coords = {'lat':float(path[0][0]), 'lon':float(path[0][1])}
-			# dest_coords = {'lat':float(path[len(path) - 1][0]), 'lon':float(path[len(path) - 1][1])}
-			# edge_info = {'length':length, 'object_id':feature['properties']['OBJECTID'], 'path_name':name}
-			G.add_node(origin)
-			G.add_node(destination)
-			G.add_edge(origin, destination)
+			path = feature['geometry']['coordinates'][0] # LIST OF LAT/LONGS FROM START TO FINISH
+			origin_coords = {'lat':float(path[0][0]), 'lon':float(path[0][1])}
+			dest_coords = {'lat':float(path[len(path) - 1][0]), 'lon':float(path[len(path) - 1][1])}
+			edge_info = {'length':float(feature['properties']['SHAPE_Length']), 'object_id':feature['properties']['OBJECTID'], 'path_name':name}
+			G.add_node(origin, attr_dict=origin_coords)
+			G.add_node(destination, attr_dict=dest_coords)
+			G.add_edge(origin, destination, attr_dict=edge_info)
 	
 	return G
 
