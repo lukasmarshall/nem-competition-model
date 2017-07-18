@@ -96,7 +96,7 @@ def getMaxShareRetailer(values, retailers):
         return None
 
 
-bidStacks = marketUtils.getBidStacks()
+bidStacks = marketUtils.getBidStacks('nsw')
 
 nem = getFromPickle('nem.pkl')
 if not nem:

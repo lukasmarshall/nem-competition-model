@@ -172,7 +172,7 @@ for feature in json_data.features:
 			m.plot(x,y,linewidth=1.5,color='r')
 			# Only label once - sometimes lines span multiple features. 
 			if feature['properties']['NAME'] in toLabel:
-				plt.text(x[len(x) // 2], y[len(y) // 2], feature['properties']['NAME'])
+				# plt.text(x[len(x) // 2], y[len(y) // 2], feature['properties']['NAME'])
 				toLabel.remove(feature['properties']['NAME'])
 			# lineObject = Line2D(x, y, color='r', visible=True,  zorder=0.2, label=feature['properties']['NAME']  )
 		else:

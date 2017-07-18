@@ -11,18 +11,16 @@ from sklearn.datasets import make_classification
 from sklearn.ensemble import ExtraTreesClassifier
 
 import marketUtils
+import random
 
 
 
 nem = marketUtils.getNem()
 interconnectors = marketUtils.getInterconnectorFlows()
-X = []
-# xlabels = []
-y = []
+(hhi, maxShareRetailers) = marketUtils.getHHI()
 
-# for attribute in list(interconnectors.itervalues().next()):
-# 	X.append([])
-# 	xlabels.append(attribute)
+X = []
+y = []
 
 
 # Prepare the data for the classifier.
@@ -33,15 +31,34 @@ xLabels.sort()
 
 for time in times:
 	# Add the classifications:
-	if float(nem[time]['sa']['price']) >= 300:
+	if float(nem[time]['nsw']['price']) >= 301:
 		classification = 1
 	else: 
 		classification = 0
 	y.append(classification)
 	row = []
 	for attribute in xLabels:
-		row.append(interconnectors[time][attribute])	
+		row.append(interconnectors[time][attribute])
+	for category in sorted(list(hhi[time])):
+		row.append(hhi[time][category])
+	row.append(nem[time]['nsw']['demand'])
+	row.append(nem[time]['vic']['demand'])
+	row.append(nem[time]['qld']['demand'])
+	row.append(nem[time]['sa']['demand'])
+	row.append(nem[time]['tas']['demand'])
+	row.append(random.randint(1,2))
 	X.append(row)
+
+for category in sorted(list(hhi[time])):
+	xLabels.append('nsw '+category)
+
+xLabels.append('nsw demand')
+xLabels.append('vic demand')
+xLabels.append('qld demand')
+xLabels.append('sa demand')
+xLabels.append('tas demand')
+xLabels.append('DUMMY VARIABLE')
+
 
 X = np.array(X)
 y = np.array(y)
