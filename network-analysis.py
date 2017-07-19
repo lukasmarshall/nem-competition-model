@@ -52,35 +52,44 @@ print G.edges()
 
 def constructGraph(features):
 	G = nx.Graph()
-	
+	seen = []
 	for feature in features:
 		name = feature['properties']['NAME']
 		
 		nodes = name.split(' to ')
-		origin = nodes[0].strip()
-		destination = nodes[len(nodes) - 1].strip()
+		origin = nodes[0].strip()+" "+feature['properties']['STATE']
+		destination = nodes[len(nodes) - 1].strip()+" "+feature['properties']['STATE']
 
-		if not origin.isspace() and not origin == "" and not destination.isspace() and not destination == "":
+		
+
+		if not origin.isspace() and not origin == "" and not destination.isspace() and not destination == "" and not feature['properties']['STATE'] == "Western Australia" and not feature['properties']['STATE'] == "Northern Territory":
 			print name
 			path = feature['geometry']['coordinates'][0] # LIST OF LAT/LONGS FROM START TO FINISH
 			origin_coords = {'lat':float(path[0][0]), 'lon':float(path[0][1])}
 			dest_coords = {'lat':float(path[len(path) - 1][0]), 'lon':float(path[len(path) - 1][1])}
 			edge_info = {'length':float(feature['properties']['SHAPE_Length']), 'object_id':feature['properties']['OBJECTID'], 'path_name':name}
-			G.add_node(origin, attr_dict=origin_coords)
-			G.add_node(destination, attr_dict=dest_coords)
+			G.add_node(origin, pos=(origin_coords['lon'], origin_coords['lat']))
+			G.add_node(destination, pos=(dest_coords['lon'], dest_coords['lat']))
 			G.add_edge(origin, destination, attr_dict=edge_info)
 	
 	return G
 
 
 
-json_file =  open("networkMap/features.geojson")
+json_file =  open("networkMap/features_edited.geojson")
 json_data = geojson.load(json_file)
 
 G = constructGraph(json_data.features)
-print G.nodes()
+# print G.nodes()
 
+# print ("Number of connected components: %v",nx.connected_components(G))
+counter = 0
+for comp in nx.connected_components(G):
+	print str(len(comp)) + " " + str(comp)+"\n"
+	counter += 1
+
+print "Number of Graphs: "+str(counter)
 # Draw the graph
 print "Drawing Graph"
-nx.draw(G)
-plt.show()
+# nx.draw(G, nx.get_node_attributes(G, 'pos'), with_labels=False, node_size=1)
+# plt.show()
