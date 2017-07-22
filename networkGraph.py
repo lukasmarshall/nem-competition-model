@@ -1,9 +1,26 @@
 import networkx as nx
 import matplotlib.pyplot as plt
 import geojson
-from decimal import *
 import geopy
 from geopy.distance import vincenty
+
+import pickle
+import os
+
+
+
+def saveToPickle(my_object, fileName):
+    print("Pickling my_object to file: "+str(fileName)+"...")
+    pickle.dump(my_object, open(fileName, "wb"))
+    print ("Saved.")
+
+def getFromPickle(fileName):
+    if os.path.isfile(fileName):
+        my_object = pickle.load(open(fileName, "rb"))
+        return my_object
+    else:
+        return None
+
 
 
 
@@ -50,7 +67,7 @@ print G.edges()
 
 
 
-# unconnected_features = ['Heron Creek Tee', 'Middleback Tee']
+unconnected_features = ['Heron Creek Tee', 'Middleback Tee', 'Steeple Flat', 'Bocco Rock','Nevertire', 'Dubbo Tee']
 
 
 
@@ -66,9 +83,7 @@ def constructGraph(features):
 		origin = nodes[0].strip()
 		destination = nodes[len(nodes) - 1].strip()
 
-		
-
-		if not origin.isspace() and not origin == "" and not destination.isspace() and not destination == "" and not state == "Western Australia" and not state == "Northern Territory" :
+		if not origin.isspace() and not origin == "" and not destination.isspace() and not destination == "" and not state == "Western Australia" and not state == "Northern Territory" and not origin in unconnected_features and not destination in unconnected_features:
 			print name
 			# The maximum distance 2 points can be apart to be considered the same node (in meters) 
 			COLOCATION_DISTANCE = 150
@@ -115,34 +130,12 @@ def constructGraph(features):
 
 
 
-json_file =  open("networkMap/features.geojson")
-json_data = geojson.load(json_file)
+def getGraphModel():
+	json_file =  open("networkMap/features.geojson")
+	json_data = geojson.load(json_file)
 
-G = constructGraph(json_data.features)
-# print G.nodes()
-
-# print ("Number of connected components: %v",nx.connected_components(G))
-counter = 0
-unconnected = []
-for comp in nx.connected_components(G):
-	print str(len(comp)) + " " + str(comp)+"\n"
-	counter += 1
-	if len(comp) < 100:
-		for node in comp:
-			unconnected.append(node)
-
-# Loop through all edges, if in an unconnected set then print.
-for n1, n2, names in G.edges(data='node_names'):
-	if n1 in unconnected or n2 in unconnected:
-		print names
-		print n1
-		print n2
-
-print "Number of Graphs: "+str(counter)
-# Draw the graph
-print "Drawing Graph"
-
-
-print getcontext()
-# nx.draw(G, nx.get_node_attributes(G, 'pos'), with_labels=False, node_size=1)
-# plt.show()
+	G = getFromPickle('./pickles/networkGraph.pkl')
+	if not G:
+		G = constructGraph(json_data.features)
+		saveToPickle(G, './pickles/networkGraph.pkl')
+	return G
