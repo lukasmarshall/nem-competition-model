@@ -45,7 +45,7 @@ print G.edges()
 
 
 
-
+unconnected_features = ['Heron Creek Tee', 'Middleback Tee']
 
 
 
@@ -55,15 +55,17 @@ def constructGraph(features):
 	seen = []
 	for feature in features:
 		name = feature['properties']['NAME']
-		
+		state = feature['properties']['STATE']
 		nodes = name.split(' to ')
-		origin = nodes[0].strip()+" "+feature['properties']['STATE']
-		destination = nodes[len(nodes) - 1].strip()+" "+feature['properties']['STATE']
+		origin = nodes[0].strip()
+		destination = nodes[len(nodes) - 1].strip()
 
 		
 
-		if not origin.isspace() and not origin == "" and not destination.isspace() and not destination == "" and not feature['properties']['STATE'] == "Western Australia" and not feature['properties']['STATE'] == "Northern Territory":
+		if not origin.isspace() and not origin == "" and not destination.isspace() and not destination == "" and not state == "Western Australia" and not state == "Northern Territory" and not origin in unconnected_features and not destination in unconnected_features:
 			print name
+			origin += " "+feature['properties']['STATE']
+			destination += " "+feature['properties']['STATE']
 			path = feature['geometry']['coordinates'][0] # LIST OF LAT/LONGS FROM START TO FINISH
 			origin_coords = {'lat':float(path[0][0]), 'lon':float(path[0][1])}
 			dest_coords = {'lat':float(path[len(path) - 1][0]), 'lon':float(path[len(path) - 1][1])}
