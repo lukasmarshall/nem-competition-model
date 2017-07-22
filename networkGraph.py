@@ -139,3 +139,25 @@ def getGraphModel():
 		G = constructGraph(json_data.features)
 		saveToPickle(G, './pickles/networkGraph.pkl')
 	return G
+
+
+def examineConnectedSubgraphs(G):
+	counter = 0
+	unconnected = []
+	for comp in nx.connected_components(G):
+		print str(len(comp)) + " " + str(comp)+"\n"
+		counter += 1
+		if len(comp) < 100:
+			for node in comp:
+				unconnected.append(node)
+
+	# Loop through all edges, if in an unconnected set then print.
+	for n1, n2, names in G.edges(data='node_names'):
+		if n1 in unconnected or n2 in unconnected:
+			print names
+			print n1
+			print n2
+
+	print "Number of Graphs: "+str(counter)
+	# Draw the graph
+	
