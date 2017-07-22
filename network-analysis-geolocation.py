@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import geojson
 from decimal import *
 import geopy
+from geopy.distance import vincenty
 
 
 
@@ -69,7 +70,8 @@ def constructGraph(features):
 
 		if not origin.isspace() and not origin == "" and not destination.isspace() and not destination == "" and not state == "Western Australia" and not state == "Northern Territory" :
 			print name
-			ROUNDING_DECIMALS = 3
+			# The maximum distance 2 points can be apart to be considered the same node (in meters) 
+			COLOCATION_DISTANCE = 200
 
 			origin += " "+feature['properties']['STATE']
 			destination += " "+feature['properties']['STATE']
@@ -77,21 +79,36 @@ def constructGraph(features):
 
 			# We're rounding to 3 decimal places here as it gives us the approximate width of a substation as the error  
 			# so roughly geolocated points will be treated as one node, which is what we want.
-			origin_coords = {'lat':round(float(path[0][0]),ROUNDING_DECIMALS), 'lon':round(float(path[0][1]),ROUNDING_DECIMALS)}
-			dest_coords = {'lat':round(float(path[len(path) - 1][0]),ROUNDING_DECIMALS), 'lon':round(float(path[len(path) - 1][1]),ROUNDING_DECIMALS)}
+			origin_coords = {'lat':float(path[0][0]), 'lon':float(path[0][1])}
+			dest_coords = {'lat':float(path[len(path) - 1][0]), 'lon':float(path[len(path) - 1][1])}
 			# Edge information - shape length and labels, some other things.
 			edge_info = {'length':float(feature['properties']['SHAPE_Length']), 'object_id':feature['properties']['OBJECTID'], 'path_name':name, 'node_names':[origin, destination]}
-			# We  pass as node labels the rounded origin, dest, but as position coords the original ones. 
+			
+			# Create node name tuples
+			origin_node = (origin_coords['lat'], origin_coords['lon'])
+			dest_node = (dest_coords['lat'], dest_coords['lon'])
+
+
+			for node in list(G.nodes()):
+				origin_distance =  vincenty((origin_coords['lat'], origin_coords['lon']), node).meters
+				dest_distance = vincenty((dest_coords['lat'], dest_coords['lon']), node).meters
+				# If the origin or the destination are close enough to an existing 
+				if origin_distance < COLOCATION_DISTANCE:
+					origin_node = node
+				if dest_distance < COLOCATION_DISTANCE:
+					dest_node = node
+			
+			# We create two nodes.
 			G.add_node(
-				(origin_coords['lat'], origin_coords['lon']), 
-				pos=(origin_coords['lon'], origin_coords['lat'])
+				origin_node, 
+				pos=(origin_node[1], origin_node[0])
 				)
 			G.add_node(
-				(dest_coords['lat'], dest_coords['lon']), 
-				pos=(dest_coords['lon'], dest_coords['lat'])
+				dest_node, 
+				pos=(dest_node[1], dest_node[0])
 				)
-			# We create an edge using the 
-			G.add_edge((round(origin_coords['lat'],3), round(origin_coords['lon'],3)), (round(dest_coords['lat'],3), round(dest_coords['lon'],3)), attr_dict=edge_info)
+			# We create an edge using the two nodes
+			G.add_edge(origin_node, dest_node, attr_dict=edge_info)
 	
 	return G
 
