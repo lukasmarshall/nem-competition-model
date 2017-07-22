@@ -71,7 +71,7 @@ def constructGraph(features):
 		if not origin.isspace() and not origin == "" and not destination.isspace() and not destination == "" and not state == "Western Australia" and not state == "Northern Territory" :
 			print name
 			# The maximum distance 2 points can be apart to be considered the same node (in meters) 
-			COLOCATION_DISTANCE = 200
+			COLOCATION_DISTANCE = 150
 
 			origin += " "+feature['properties']['STATE']
 			destination += " "+feature['properties']['STATE']
@@ -88,7 +88,8 @@ def constructGraph(features):
 			origin_node = (origin_coords['lat'], origin_coords['lon'])
 			dest_node = (dest_coords['lat'], dest_coords['lon'])
 
-
+			# Check distance against all other nodes to find effectively colocated spots.
+			# This slows things down A LOT because we make the complexity n^2
 			for node in list(G.nodes()):
 				origin_distance =  vincenty((origin_coords['lat'], origin_coords['lon']), node).meters
 				dest_distance = vincenty((dest_coords['lat'], dest_coords['lon']), node).meters
