@@ -130,6 +130,8 @@ def constructGraph(features):
 
 
 
+
+
 def getGraphModel():
 	json_file =  open("networkMap/features.geojson")
 	json_data = geojson.load(json_file)
@@ -139,6 +141,7 @@ def getGraphModel():
 		G = constructGraph(json_data.features)
 		saveToPickle(G, './pickles/networkGraph.pkl')
 	return G
+
 
 
 def examineConnectedSubgraphs(G):

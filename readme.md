@@ -13,3 +13,7 @@ To fix this, I started by rounding the lats and longs to 3 decimal places, which
 The final strategy was to use an estimate of the distance of a node from any other already-registered node, and assume that the nodes are colocated if the distance was under a threshold. For this I used the Vincenty distance measure from the geopy library. A threshold of 150 meters appears adequate for linking all colocated nodes and seems a reasonable distance for a facility to be considered cohesive. This strategy works well but slows graph creation time significantly as it increases algorithmic complexity to O(n^2). 
 
 Another option would be to use a pre-pass clustering method but this does not seem necessary given that a colocation distance of 150 meters is sufficient to link all cohesive nodes in the transmission network structure. 
+
+##Generators on top of network graph model
+I found a list of generators on national map.
+File format was GML. I used instructions here https://gis.stackexchange.com/questions/28613/convert-gml-to-geojson to convert to geojson.
