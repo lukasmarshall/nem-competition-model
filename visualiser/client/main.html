@@ -1,0 +1,57 @@
+<head>
+    <title>Network Connection Model</title>
+</head>
+
+<body>
+    <div class="header-line">
+        <h1><i class="mdi mdi-power-plug"></i>
+            <!-- bell -->Networkalizer 9000</h1>
+
+        <h3 id="byline">Open-Source Network Connection Model</h3>
+
+    </div>
+    <div class="main-content">
+        <div class="sidebar">
+            {{> sidebar }}
+        </div>
+
+        <div class="graphVis">
+            {{> graphVis }}
+        </div>
+    </div>
+
+</body>
+
+
+<template name="sidebar">
+  
+
+  <div class="sidebar-header">
+    
+    <h2>{{current_dataset.name}}</h2>
+    {{#dropdownTrigger name="uniqueName" }}
+      <a href="#" class="change">Change</a>
+    {{/dropdownTrigger}}
+  </div>
+  
+  {{#dropdown name="uniqueName"}}
+  <a href="#" id="graph-choice" dataset="PyGraphistry%2FHJ6TYL0OVO">Gen Capacities</a>
+  {{/dropdown}}
+
+  <p>
+      {{current_dataset.description}}
+  </p>
+
+  
+
+  
+</template>
+
+
+
+<template name="graphVis">
+  <!-- Based on code from https://graphistry.github.io/docs/legacy/api/0.9.2/api.html#iframestyle -->
+<iframe
+  src="https://labs.graphistry.com/graph/graph.html?dataset={{dataset}}"
+></iframe>
+</template>

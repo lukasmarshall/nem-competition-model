@@ -22,54 +22,48 @@ def getFromPickle(fileName):
         return None
 
 
+# G = nx.Graph()
+
+# # Add a single node
+# G.add_node(1)
+
+# # Add a list of nodes
+# G.add_nodes_from([2,3])
 
 
-G = nx.Graph()
+# # Add an edge between 1 and 2 and associate it with an object
+# G.add_edge(1,2, object={'number':2})
+# # You can do this for nodes and whole graphs also.
+# # Weight is a special attribute and is used by graph algos. 
 
-# Add a single node
-G.add_node(1)
+# # add an 'nbunch' of nodes (iterable container of nodes)
+# H = nx.path_graph(10)
+# G.add_nodes_from(H)
 
-# Add a list of nodes
-G.add_nodes_from([2,3])
+# # Add an edge from 1 to 2
+# G.add_edge(1,2)
 
+# # Add an edge tuple
+# e = (2,3)
+# G.add_edge(*e) # the * unpacks the edge tuple. cool. 
 
-# Add an edge between 1 and 2 and associate it with an object
-G.add_edge(1,2, object={'number':2})
-# You can do this for nodes and whole graphs also.
-# Weight is a special attribute and is used by graph algos. 
+# # Add edges from a list
+# G.add_edges_from([(1,2), (1,3)])
 
-# add an 'nbunch' of nodes (iterable container of nodes)
-H = nx.path_graph(10)
-G.add_nodes_from(H)
+# # Add eges from an 'ebunch' iterable container of edges
+# G.add_edges_from(H.edges())
 
-# Add an edge from 1 to 2
-G.add_edge(1,2)
+# # Remove some nodes
+# G.remove_nodes_from([2,3])
 
-# Add an edge tuple
-e = (2,3)
-G.add_edge(*e) # the * unpacks the edge tuple. cool. 
+# # Print the nodes:
+# print G.nodes()
 
-# Add edges from a list
-G.add_edges_from([(1,2), (1,3)])
-
-# Add eges from an 'ebunch' iterable container of edges
-G.add_edges_from(H.edges())
-
-# Remove some nodes
-G.remove_nodes_from([2,3])
-
-# Print the nodes:
-print G.nodes()
-
-# Print the edges
-print G.edges()
-
-
+# # Print the edges
+# print G.edges()
 
 
 unconnected_features = ['Heron Creek Tee', 'Middleback Tee', 'Steeple Flat', 'Bocco Rock','Nevertire', 'Dubbo Tee']
-
-
 
 
 def constructGraph(features):
@@ -79,6 +73,7 @@ def constructGraph(features):
 	for feature in features:
 		name = feature['properties']['NAME']
 		state = feature['properties']['STATE']
+		capacityKV = feature['properties']['CAPACITYKV']
 		nodes = name.split(' to ')
 		origin = nodes[0].strip()
 		destination = nodes[len(nodes) - 1].strip()
@@ -91,13 +86,18 @@ def constructGraph(features):
 			origin += " "+feature['properties']['STATE']
 			destination += " "+feature['properties']['STATE']
 			path = feature['geometry']['coordinates'][0] # LIST OF LAT/LONGS FROM START TO FINISH
-
 			# We're rounding to 3 decimal places here as it gives us the approximate width of a substation as the error  
 			# so roughly geolocated points will be treated as one node, which is what we want.
 			origin_coords = {'lat':float(path[0][0]), 'lon':float(path[0][1])}
 			dest_coords = {'lat':float(path[len(path) - 1][0]), 'lon':float(path[len(path) - 1][1])}
 			# Edge information - shape length and labels, some other things.
-			edge_info = {'length':float(feature['properties']['SHAPE_Length']), 'object_id':feature['properties']['OBJECTID'], 'path_name':name, 'node_names':[origin, destination]}
+			edge_info = {
+				'length':float(feature['properties']['SHAPE_Length']), 
+				'object_id':feature['properties']['OBJECTID'], 
+				'path_name':name, 
+				'node_names':[origin, destination],
+				'capacityKV':capacityKV,
+			}
 			
 			# Create node name tuples
 			origin_node = (origin_coords['lat'], origin_coords['lon'])

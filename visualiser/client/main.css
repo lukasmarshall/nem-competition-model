@@ -1,0 +1,75 @@
+/* CSS declarations go here */
+
+body {
+    background-color: #333339;
+    color: #ffffff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
+    color: #ffffff
+}
+
+button {
+    border-radius: 1px;
+    border-width: 0px;
+    background-color: white;
+}
+
+.header-line {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+}
+
+.header-line i {
+    color: #FF7F00;
+}
+
+.header-line #byline {
+    padding-left: 2%;
+    color: #FF7F00;
+}
+
+.main-content {
+    width: 100%;
+    display: flex;
+}
+
+.sidebar {
+    width: 20%;
+    background-color: #333339;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    margin-right: 3px;
+}
+
+.sidebar .sidebar-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    /* color: #04819E; */
+    color: #B7B7C4;
+}
+
+.sidebar .sidebar-header .change {
+    font-size: 0.3em;
+}
+
+.sidebar p {
+    font-size: 0.8em;
+}
+
+.graphVis {
+    width: 80%
+}
+
+iframe {
+    border: 1px solid #333339;
+    width: 100%;
+    height: 100%;
+    min-height: 85vh;
+}
