@@ -112,7 +112,7 @@ for feature in features:
 # 	if not int(edge['capacityKV']) in seen_line_capacities:
 # 		seen_line_capacities.append(int(edge['capacityKV']))
 # 	G.edge[edge]['capacity_color_code'] = seen_line_capacities.index(int(edge['capacityKV']))
-	
+
 
 
 plotter = graphistry.bind(
