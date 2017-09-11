@@ -132,7 +132,11 @@ def constructGraph(features):
 
 
 
-def getGraphModel():
+
+
+
+
+def getNetworkGraph():
 	json_file =  open("networkMap/features.geojson")
 	json_data = geojson.load(json_file)
 
@@ -142,6 +146,81 @@ def getGraphModel():
 		saveToPickle(G, './pickles/networkGraph.pkl')
 	return G
 
+
+def getNetworkAndGeneratorGraph():
+	G = getNetworkGraph()
+	G = getFromPickle('./pickles/networkAndGeneratorGraph.pkl')
+	if not G:
+		G = _addGenerators(G)
+		saveToPickle(G, './pickles/networkAndGeneratorGraph.pkl')
+	
+	return G
+
+
+def _addGenerators(G):
+	print "Adding generators."
+	# Get the geojson containing all gens in australia (2017)
+	json_file =  open("generatorMap/generators.geojson")
+	json_data = geojson.load(json_file)
+	features = json_data.features
+	# remove features in non-NEM states
+	non_nem_states = ["Western Australia", "Northern Territory"]
+	features[:] = [feature for feature in features if feature.get('properties').get('STATE') not in non_nem_states]
+
+	# For every feature, find a corresponding nod ein the network graph to associate it with. 
+	for feature in features:
+		state = feature.properties['STATE']
+		capacity = float(feature.properties['GENERATIONMW']) if feature.properties['GENERATIONMW'] else 0
+
+		# Associate each feature with a graph node.
+		# Check distance against all nodes to find probably corresponding node..
+		# This is slow because we make the complexity n^2.
+		nodes = list(G.nodes())
+		min_distance = vincenty((feature.geometry.coordinates[0],feature.geometry.coordinates[1]), nodes[0]).meters
+		closest_node = nodes[0]
+		for node in list(G.nodes()):
+			# Get the vincenty distance between a given node and the generator
+			distance =  vincenty((feature.geometry.coordinates[0],feature.geometry.coordinates[1]), node).meters
+			closest_node = node if distance < min_distance else closest_node
+			min_distance = distance if distance < min_distance else min_distance
+		feature.graph_info = { 'node':closest_node, 'node_distance': min_distance} #keep some info about which part of the graph the feature was assigned to, for future analysis
+
+
+		# If the node is not currently a 'generators'type node, make it one.  
+		if G.node[closest_node]['node_type'] != 'generator':
+			G.node[closest_node]['node_type'] = 'generator'
+			G.node[closest_node]['generators'] = []
+			G.node[closest_node]['generation_capacity'] = 0
+			G.node[closest_node]['generation_type'] = ""
+			G.node[closest_node]['generation_label'] = ""
+
+		# Add the current generator feature to the generators node
+		G.node[closest_node]['generators'].append(feature)
+		G.node[closest_node]['num_generators'] = len(G.node[closest_node]['generators'])
+		
+		if feature['properties']['GENERATIONMW']:
+			G.node[closest_node]['generation_capacity'] += float(feature['properties']['GENERATIONMW'])
+
+		# Give the node a 'fuel type'for graphing purposes. 
+		# At the moment I'm just choosing whichever was the last primary fuel type seen at the node. Could do better but I want a single type label for each one for coloring purposes.
+		if feature['properties']['PRIMARYFUELTYPE']:
+			fuelType = feature['properties']['PRIMARYFUELTYPE']
+			G.node[closest_node]['generation_type'] = fuelType
+			if not fuelType in seen_gen_types:
+				seen_gen_types.append(fuelType)
+			G.node[closest_node]['generation_type_color_code'] = seen_gen_types.index(fuelType)
+
+		if feature['properties']['NAME']:
+			G.node[closest_node]['generation_label'] += feature['properties']['NAME']+" "
+
+
+	# print features
+	for feature in features:
+		state = feature.properties['STATE']
+		print state
+		print feature
+		print feature['graph_info']['node_distance']
+	return G
 
 
 def examineConnectedSubgraphs(G):
