@@ -8,7 +8,7 @@ import json
 
 graphistry.register(key='555194151a1e7dd59b00ae0c4826d91b3bfbf4afac2239e05ec7180aa6f06e152d43ddea14a3616121b451cf00d150c1')
 
-G = networkGraph.getGraphModel()
+G = networkGraph.getNetworkGraph()
 
 for node in list(G.nodes()):
 	G.node[node]['node_type'] = 'connection'	
@@ -28,12 +28,6 @@ json_file =  open("generatorMap/generators.geojson")
 json_data = geojson.load(json_file)
 features = json_data.features
 
-# Hold the unconnected points.
-unconnected = []
-connected = []
-
-# The maximum distance 2 points can be apart to be considered the same node (in meters) 
-COLOCATION_DISTANCE = 300
 
 
 non_nem_states = ["Western Australia", "Northern Territory"]
